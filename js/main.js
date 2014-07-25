@@ -7,9 +7,22 @@ $(document).ready(function() {
 	});
 
 	$('form').submit(function(event) {
-		var $inputFirst = $('input:first').val();
+		var $name = $('#name').val();
+		var $sets = $('#sets').val();
+		var $reps = $('#reps').val();
+		var $weight = $('#weight').val();
 
-		$('ul').append('<li>' + $inputFirst + '</li>');
+		function addExercise(exercise) {
+			$('ul').append('<li>' + exercise + '</li>');
+
+			$('input').val('');
+		}
+
+		addExercise($name);
+		addExercise($sets);
+		addExercise($reps);
+		addExercise($weight);
+
 		event.preventDefault();
 	});
 
