@@ -12,17 +12,20 @@ $(document).ready(function() {
 		var $reps = $('#reps').val();
 		var $weight = $('#weight').val();
 
-		function addExercise(exercise) {
-			$('ul').append('<li>' + exercise + '</li>');
+		function addExercise() {
+			if ($name && $sets && $reps && $weight != '') {
+				$('.nameList').append('<li>' + $name + '</li>');
+				$('.setList').append('<li>' + $sets + '</li>');
+				$('.repsList').append('<li>' + $reps + '</li>');
+				$('.weightList').append('<li>' + $weight + '</li>');
 
-			$('input').val('');
+				$('input').val('');			
+			} else {
+				alert('Error, empty fields.');
+			}
 		}
 
-		addExercise($name);
-		addExercise($sets);
-		addExercise($reps);
-		addExercise($weight);
-
+		addExercise();
 		event.preventDefault();
 	});
 
