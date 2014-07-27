@@ -14,17 +14,19 @@ $(document).ready(function() {
 
 		function addExercise() {
 			if ($name && $sets && $reps && $weight != '') {
+				// Adds input to list item
 				$('.nameList').append('<li>' + $name + '</li>');
 				$('.setList').append('<li>' + $sets + '</li>');
 				$('.repsList').append('<li>' + $reps + '</li>');
 				$('.weightList').append('<li>' + $weight + '</li>');
 
+				// Clear input values
 				$('input').val('');			
 			} else {
 				alert('Error, empty fields.');
 			}
 		}
-
+		
 		addExercise();
 		event.preventDefault();
 	});
