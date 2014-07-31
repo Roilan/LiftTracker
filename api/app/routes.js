@@ -1,41 +1,38 @@
 var User = require('../app/models/user');
 
+
 module.exports = function(app, passport) {
 
-	// LOGIN =======================================================
-	app.post('/api/login', passport.authenticate('local-login', {failureFlash:true}), 
+	// LOGIN
+	app.post('/api/login', passport.authenticate('local-login')), 
 	function (req, res) {
 
 		if(req.user) {
 			res.json(req.user);
-		} else {
-			res.json(req.flash('loginMessage')); //tofix
 		}
-	});
+	};
 
-	// SIGNUP ======================================================
+	// SIGNUP
 	app.post('/api/signup', passport.authenticate('local-signup'), 
 	function (req, res) {
 
 		if(req.user) {
 			res.json(req.user);
-		} else {
-			res.json(req.flash('signupMessage')); //tofix
 		}
 	});
 
-	// PROFILE ======================================================
+	// PROFILE
 	app.get('/api/profile', isLoggedIn, function(req, res) {
 		res.json(req.user);
 	});
 
-	// LOGOUT =======================================================
+	// LOGOUT
 	app.get('/api/logout', function(req, res) {
 		req.logout();
 		res.json('success');
 	});
 
-	// FIND USER BY NAME ============================================
+	// FIND A USER BY NAME
 	app.get('/api/user/:username', function(req, res){
 
 		User.findOne({ 'local.email' :  req.params.username }, function(err, user) {
@@ -45,6 +42,7 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	// FIND A USERS WORKOUTS
 	app.get('/api/user/:username/workouts', function(req, res){
 
 		User.findOne({ 'local.email' :  req.params.username }, function(err, user) {
@@ -54,6 +52,7 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	// SUBMIT NEW WORKOUTS
 	app.post('/api/workouts', isLoggedIn, function(req, res){
 
 		var workout = {
@@ -72,10 +71,11 @@ module.exports = function(app, passport) {
 		res.json(req.user.workouts);
 	});
 
+	// FIND ALL USERS
 	app.get('/api/allusers', function(req, res){
 		User.find(function (err, users) {
 			if(err) console.log(err);
-			res.json(users);
+			else res.json(users);
 		});
 	});
 };

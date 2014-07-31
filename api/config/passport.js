@@ -22,19 +22,14 @@ module.exports = function(passport) {
         passwordField : 'password',
         passReqToCallback : true // pass back the entire request to the callback
     },
-
     function(req, email, password, done) {
 
 		// checks if email is already registered
         User.findOne({ 'local.email' :  email }, function(err, user) {
 
-            if (err) {
-                return done(err);
-            } 
+            if (err) return done(err);
 
-            if (user) {
-                return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            } 
+            if (user) return done(null, false, { message: 'email is already taken' }); //email is already taken
 
             else { 
 
@@ -65,9 +60,9 @@ module.exports = function(passport) {
 
             if (err) return done(err);
 
-            if (!user) return done(null, false, req.flash('loginMessage', 'No user found.')); 
+            if (!user) return done(null, false); //no user found
 
-            if (!user.validPassword(password)) return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); 
+            if (!user.validPassword(password)) return done(null, false); //Wrong password
 
             return done(null, user);
         });
