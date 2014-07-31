@@ -6,7 +6,9 @@ var userSchema = mongoose.Schema({
     local            : {
         email        : String,
         password     : String,
-    }
+    },
+
+    workouts		 : [String]
 });
 
 // methods =========================================================
