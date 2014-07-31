@@ -1,5 +1,4 @@
 var User = require('../app/models/user');
-var Workout = require('../app/models/workout');
 
 module.exports = function(app, passport) {
 
@@ -40,7 +39,7 @@ module.exports = function(app, passport) {
 	app.get('/api/user/:username', function(req, res){
 
 		User.findOne({ 'local.email' :  req.params.username }, function(err, user) {
-			if(err) throw err;
+			if(err) console.log(err);
 			if(!user) res.json('user not found');
 			else res.json(user);
 		});
@@ -49,7 +48,7 @@ module.exports = function(app, passport) {
 	app.get('/api/user/:username/workouts', function(req, res){
 
 		User.findOne({ 'local.email' :  req.params.username }, function(err, user) {
-			if(err) throw err;
+			if(err) console.log(err);
 			if(!user) res.json('user not found');
 			else res.json(user.workouts);
 		});
@@ -75,7 +74,7 @@ module.exports = function(app, passport) {
 
 	app.get('/api/allusers', function(req, res){
 		User.find(function (err, users) {
-			if(err) throw err;
+			if(err) console.log(err);
 			res.json(users);
 		});
 	});
