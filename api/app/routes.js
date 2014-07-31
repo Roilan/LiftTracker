@@ -2,40 +2,48 @@ var User = require('../app/models/user');
 
 module.exports = function(app, passport) {
 
-	// LOGIN =======================================================
-	app.post('/api/login', passport.authenticate('local-login', {failureFlash:true}), 
-	function (req, res) {
-
-		if(req.user) {
-			res.json(req.user);
-		} else {
-			res.json(req.flash('loginMessage')); //tofix
-		}
+	// LOGIN
+	app.post('/api/login', function (req, res) {
+		passport.authenticate('local-login',function (err, user, info) {
+			if(user) {
+				req.login(user, function (err) {
+					if(err) console.log(err);
+					res.json(user);
+				});
+			}
+			else {
+				res.json(info);
+			}
+		})(req, res);
 	});
 
-	// SIGNUP ======================================================
-	app.post('/api/signup', passport.authenticate('local-signup'), 
-	function (req, res) {
-
-		if(req.user) {
-			res.json(req.user);
-		} else {
-			res.json(req.flash('signupMessage')); //tofix
-		}
+	// SIGNUP
+	app.post('/api/signup', function (req, res) {
+		passport.authenticate('local-signup',function (err, user, info) {
+			if(user) {
+				req.login(user, function (err) {
+					if(err) console.log(err);
+					res.json(user);
+				});
+			}
+			else {
+				res.json(info);
+			}
+		})(req, res);
 	});
 
-	// PROFILE ======================================================
+	// PROFILE
 	app.get('/api/profile', isLoggedIn, function(req, res) {
 		res.json(req.user);
 	});
 
-	// LOGOUT =======================================================
+	// LOGOUT
 	app.get('/api/logout', function(req, res) {
 		req.logout();
 		res.json('success');
 	});
 
-	// FIND USER BY NAME ============================================
+	// FIND A USER BY NAME
 	app.get('/api/user/:username', function(req, res){
 
 		User.findOne({ 'local.email' :  req.params.username }, function(err, user) {
@@ -45,6 +53,7 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	// FIND A USERS WORKOUTS
 	app.get('/api/user/:username/workouts', function(req, res){
 
 		User.findOne({ 'local.email' :  req.params.username }, function(err, user) {
@@ -54,6 +63,7 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	// SUBMIT NEW WORKOUTS
 	app.post('/api/workouts', isLoggedIn, function(req, res){
 
 		var workout = {
@@ -72,10 +82,11 @@ module.exports = function(app, passport) {
 		res.json(req.user.workouts);
 	});
 
+	// FIND ALL USERS
 	app.get('/api/allusers', function(req, res){
 		User.find(function (err, users) {
 			if(err) console.log(err);
-			res.json(users);
+			else res.json(users);
 		});
 	});
 };
@@ -86,6 +97,7 @@ function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) { 
 		return next(); 
 	} else {
-		res.json('not authenticated');
+		console.log(req.user);
+		res.json({'error':'not authenticated'});
 	}
 }
