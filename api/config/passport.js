@@ -24,12 +24,11 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) {
 
-		// checks if email is already registered
         User.findOne({ 'local.email' :  email }, function(err, user) {
 
             if (err) return done(err);
 
-            if (user) return done(null, false, { message: 'email is already taken' }); //email is already taken
+            if (user) return done(null, false, { error: 'email is taken' }); //email is already taken
 
             else { 
 
@@ -40,7 +39,7 @@ module.exports = function(passport) {
 
 				// save user
                 newUser.save(function(err) {
-                    if (err) throw err;
+                    if (err) console.log(err);
                     return done(null, newUser);
                 });
             }
@@ -60,12 +59,11 @@ module.exports = function(passport) {
 
             if (err) return done(err);
 
-            if (!user) return done(null, false); //no user found
+            if (!user) return done(null, false, { error: 'user does not exist!' });
 
-            if (!user.validPassword(password)) return done(null, false); //Wrong password
+            if (!user.validPassword(password)) return done(null, false, { error: 'Ooops! wrong password' });
 
-            return done(null, user);
+            else return done(null, user);
         });
     }));
 };
-
