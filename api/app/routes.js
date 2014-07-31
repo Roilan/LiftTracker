@@ -1,21 +1,34 @@
 var User = require('../app/models/user');
-var LocalStrategy   = require('passport-local').Strategy;
 
 module.exports = function(app, passport) {
 
 	// LOGIN
 	app.post('/api/login', function (req, res) {
 		passport.authenticate('local-login',function (err, user, info) {
-			if(user) res.json(user);
-			else res.json(info);
+			if(user) {
+				req.login(user, function (err) {
+					if(err) console.log(err);
+					res.json(user);
+				});
+			}
+			else {
+				res.json(info);
+			}
 		})(req, res);
 	});
 
 	// SIGNUP
 	app.post('/api/signup', function (req, res) {
 		passport.authenticate('local-signup',function (err, user, info) {
-			if(user) res.json(user);
-			else res.json(info);
+			if(user) {
+				req.login(user, function (err) {
+					if(err) console.log(err);
+					res.json(user);
+				});
+			}
+			else {
+				res.json(info);
+			}
 		})(req, res);
 	});
 
@@ -84,6 +97,7 @@ function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) { 
 		return next(); 
 	} else {
+		console.log(req.user);
 		res.json({'error':'not authenticated'});
 	}
 }
