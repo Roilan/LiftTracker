@@ -43,10 +43,26 @@ userSchema.methods.setWorkout = function(name, sets, reps, weight) {
 // get workouts
 userSchema.methods.getWorkouts = function () {
 	return this.workouts;
-}
+};
 
+// get a workout
 userSchema.methods.getWorkout = function (id) {
-	//todo
-}
+	for(var i=0; i<this.workouts.length; i++) {
+		if(this.workouts[i].id === id) return this.workouts[i];
+	}
+};
+
+// update workout
+userSchema.methods.updateWorkout = function (id, name, sets, reps, weight) {
+	for(var i=0; i<this.workouts.length; i++) {
+		if(workouts[i].id === id) {
+			var workout = workouts[i];
+			workout.name = name;
+			workout.sets = sets;
+			workout.reps = reps;
+			workout.weight = weight;
+		}
+	}
+};
 
 module.exports = mongoose.model('User', userSchema);

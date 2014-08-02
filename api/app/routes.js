@@ -63,6 +63,11 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	// FIND A USERS WORKOUTS WITHIN RANGE
+	app.get('/api/user/:username/workouts/:from-:to', function(req, res) {
+		//todo
+	});
+
 	// SUBMIT NEW WORKOUTS
 	app.post('/api/workouts', isLoggedIn, function(req, res){
 
