@@ -59,28 +59,37 @@ module.exports = function(app, passport) {
 		User.findOne({ 'local.email' :  req.params.username }, function(err, user) {
 			if(err) console.log(err);
 			if(!user) res.json('user not found');
-			else res.json(user.workouts);
+			else res.json(user.getWorkouts());
 		});
+	});
+
+	// FIND A USERS WORKOUTS WITHIN RANGE
+	app.get('/api/user/:username/workouts/:from-:to', function(req, res) {
+		//todo
 	});
 
 	// SUBMIT NEW WORKOUTS
 	app.post('/api/workouts', isLoggedIn, function(req, res){
 
-		var workout = {
-	        date    : Date.now(),
-	        name    : req.body.name   || 'default',
-	        sets	: req.body.sets	  || 'default',
-	        reps	: req.body.reps   || 'default',
-	        weight	: req.body.weight || 'default'
-    	}
+		var info = req.body;
 
-    	console.log(req.body);
-
-		req.user.workouts.push(JSON.stringify(workout));
-		req.user.save();
-
-		res.json(req.user.workouts);
+		if(info.name && info.sets && info.reps && info.weight) {
+			res.json(req.user.setWorkout(info.name, info.sets, info.reps, info.weight));
+		} else {
+			res.json({'error':'missing fields'});
+		}
 	});
+
+	// EDIT WORKOUT
+	//todo
+	// DELETE WORKOUT
+	//todo
+	// CHANGE PASSWORD
+	//todo
+	// CHANGE USERNAME
+	//todo
+	// CHANGE EMAIL
+	//todo
 
 	// FIND ALL USERS
 	app.get('/api/allusers', function(req, res){
