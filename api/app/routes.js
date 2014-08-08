@@ -2,6 +2,13 @@ var User = require('../app/models/user');
 
 module.exports = function(app, passport) {
 
+	//temp
+	app.all('*', function(req, res, next) {
+		res.header("Access-Control-Allow-Origin", "*");
+		res.header("Access-Control-Allow-Headers", "X-Requested-With");
+		next();
+	});
+
 	// LOGIN
 	app.post('/api/login', function (req, res) {
 		passport.authenticate('local-login',function (err, user, info) {
