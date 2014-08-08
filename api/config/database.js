@@ -1,3 +1,3 @@
 module.exports = {
-	'url' : 'mongodb://lifttrackerTESTING:mahalo@ds053469.mongolab.com:53469/lifttracker'  //temporary  database
-};
+	'url' : 'mongodb://testing:testing@ds029827.mongolab.com:29827/lifttracker'  //temporary  database
+}

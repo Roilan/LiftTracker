@@ -35,7 +35,7 @@ app.use(passport.session());
 require('./app/routes.js')(app, passport);
 
 // LAUNCH
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 6000;
 app.listen(port, function (err) {
 	if (err) console.log(err);
 	else console.log('listening on port: ' + port);
