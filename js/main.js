@@ -6,7 +6,7 @@ $(document).ready(function() {
 		$('.setDate').text(setDay);
 	});
 
-	$('form').submit(function(event) {
+	$('.formLog').submit(function(event) {
 		var $name = $('#name').val();
 		var $sets = $('#sets').val();
 		var $reps = $('#reps').val();
