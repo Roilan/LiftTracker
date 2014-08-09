@@ -27,3 +27,20 @@ input {
 ul li {
 	list-style-type: none;
 }
+
+
+// Signup
+
+.passHint {
+  border-radius: 5px;
+  position: relative;
+  bottom: 38px;
+  left: 28%;
+  font-size: 14px;
+  text-align: center;
+  background: #2F558E;
+  width: 160px;
+  height: 90px;
+  padding: 5px 10px;
+  color: #fff;
+}
