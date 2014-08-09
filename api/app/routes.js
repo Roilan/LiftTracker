@@ -9,7 +9,33 @@ module.exports = function(app, passport) {
 		next();
 	});
 
-	// LOGIN
+    // handles login
+    app.post('/login', passport.authenticate('local-login', {
+        successRedirect: '/profile',
+        failureRedirect: '/login',
+        failureFlash: true
+    }))
+
+    // handles signup
+    app.post('/signup', passport.authenticate('local-signup', {
+        successRedirect: '/profile',
+        failureRedirect: '/signup',
+        failureFlash: true
+    }))
+
+    app.get('/', function(req, res){
+    	//todo
+    })
+
+    app.get('/:username', function(req, res){
+    	//todo
+    })
+
+    app.get('/profile', function(req, res){
+    	//todo
+    })
+
+    // LOGIN
 	app.post('/api/login', function (req, res) {
 		passport.authenticate('local-login',function (err, user, info) {
 			if(user) {
