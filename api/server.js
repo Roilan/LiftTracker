@@ -32,7 +32,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // ROUTES
-require('./app/routes.js')(app, passport);
+require('./app/routes.js')(app, passport)
+require('./app/api_routes.js')(app, passport)
 
 // LAUNCH
 var port = process.env.PORT || 1242;
