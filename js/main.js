@@ -39,11 +39,12 @@ $(document).ready(function() {
 
 	// Checks if password is 8 characters or longer
 	function passCheck() {
-		if ($(this).val().length >= 8) {
+		if ($(this).val().length >= 8 && $(this).val().length < 101) {
 			$(this).next().hide();
 			$('.formSignup span').next().prop('disabled', false);
 		} else {
 			$(this).next().show();
+			$('.formSignup span').next().prop('disabled', true);
 		}
 	}
 
