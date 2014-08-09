@@ -31,4 +31,22 @@ $(document).ready(function() {
 		addExercise();
 	});
 
+
+	//Sign up Password check
+	// Initial hide and disable on load
+	$('.formSignup span').hide();
+	$('.btnSignup').prop('disabled', true);
+
+	// Checks if password is 8 characters or longer
+	function passCheck() {
+		if ($(this).val().length >= 8) {
+			$(this).next().hide();
+			$('.formSignup span').next().prop('disabled', false);
+		} else {
+			$(this).next().show();
+		}
+	}
+
+	$('.signupPass').on('focus', passCheck).keyup(passCheck);
+
 });
