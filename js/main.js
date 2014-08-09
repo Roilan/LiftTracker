@@ -31,6 +31,16 @@ $(document).ready(function() {
 		addExercise();
 	});
 
+	// Validates email through regular expression
+	function validateEmail($emailVal) {
+		 var regex = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+		 
+		 if (regex.test($emailVal)) {
+		 	return true;
+		 }	else {
+		 return false;
+		 }
+	}
 
 	//Sign up Password check
 	// Initial hide and disable on load
@@ -39,14 +49,26 @@ $(document).ready(function() {
 
 	// Checks if password is 8 characters or longer
 	function passCheck() {
-		if ($(this).val().length >= 8) {
+		if ($(this).val().length >= 8 && $(this).val().length < 101) {
 			$(this).next().hide();
 			$('.formSignup span').next().prop('disabled', false);
 		} else {
 			$(this).next().show();
+			$('.formSignup span').next().prop('disabled', true);
 		}
 	}
 
 	$('.signupPass').on('focus', passCheck).keyup(passCheck);
 
+
+	//Submit button
+	$('.btnSignup').on('click', function(event) {
+		event.preventDefault();
+
+		var $emailVal = $('.signupEmail').val();
+
+		if (validateEmail($emailVal) == false) {
+			alert('Invalid email');
+		}
+	});
 });
