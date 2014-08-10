@@ -30,10 +30,10 @@
         <div class="row">
           <div class="col-xs-12">
             
-            <form action="" class="formSignup">
-              <input type="text" class="form-control signupEmail" placeholder="Email" />
+            <form action="http://localhost:1242/signup" method="POST" class="formSignup">
+              <input name="email" type="text" class="form-control signupEmail" placeholder="Email" />
 
-              <input type="password" class="form-control signupPass" placeholder="Password"/>
+              <input name="password" type="password" class="form-control signupPass" placeholder="Password"/>
               <span class="passHint">Your password must be 8-100 characters long</span>
 
               <input type="submit" class="btn btn-primary btnSignup" />

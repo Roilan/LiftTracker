@@ -12,26 +12,26 @@ module.exports = function(app, passport) {
     // handles login
     app.post('/login', passport.authenticate('local-login', {
         successRedirect: '/profile',
-        failureRedirect: '/login',
-        failureFlash: true
+        failureRedirect: '/'
+        //failureFlash: true
     }))
 
     // handles signup
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/profile',
-        failureRedirect: '/signup',
-        failureFlash: true
+        failureRedirect: '/'
+        //failureFlash: true
     }))
 
+    app.get('/profile', function(req, res){
+    	res.send('succesful signup')
+    })
+
     app.get('/', function(req, res){
-    	//todo
+    	res.send('validation has failed')
     })
 
     app.get('/:username', function(req, res){
-    	//todo
-    })
-
-    app.get('/profile', function(req, res){
     	//todo
     })
 

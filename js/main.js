@@ -63,7 +63,7 @@ $(document).ready(function() {
 
 	//Submit button
 	$('.btnSignup').on('click', function(event) {
-		event.preventDefault();
+		//event.preventDefault();
 
 		var $emailVal = $('.signupEmail').val();
 
